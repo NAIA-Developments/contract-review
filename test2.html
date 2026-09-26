@@ -1,0 +1,2050 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>طلبات مراجعة العقود | NAIA Developments</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #13263a;
+            --blue: #1976d2;
+            --blue-light: #eaf4ff;
+            --border: #dfe5eb;
+            --text: #17212b;
+            --muted: #718096;
+            --bg: #f4f7fa;
+            --white: #ffffff;
+            --success: #1b9b55;
+            --warning: #e6a700;
+            --danger: #d64545;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        /* =========================
+           TOP HEADER
+        ========================= */
+
+        .top-header {
+            height: 72px;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .brand-name {
+            font-size: 10px;
+            letter-spacing: 3px;
+            margin-top: 3px;
+        }
+
+        .top-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 14px;
+        }
+
+        .top-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 24px 12px;
+        }
+
+        .top-menu a.active {
+            background: #1e4568;
+            border-bottom: 3px solid #5ba7ef;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: right;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: white;
+            color: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        /* =========================
+           LAYOUT
+        ========================= */
+
+        .layout {
+            display: flex;
+            direction: ltr;
+            min-height: calc(100vh - 72px);
+        }
+
+        .sidebar {
+            direction: rtl;
+            width: 270px;
+            background: white;
+            border-left: 1px solid var(--border);
+            padding: 22px 18px;
+        }
+
+        .main {
+            direction: rtl;
+            flex: 1;
+            padding: 28px;
+            max-width: 1400px;
+            margin: auto;
+            width: 100%;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .new-request {
+            width: 100%;
+            border: none;
+            background: var(--blue);
+            color: white;
+            padding: 13px;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 22px;
+        }
+
+        .new-request:hover {
+            background: #1265b7;
+        }
+
+        .side-menu {
+            margin-bottom: 28px;
+        }
+
+        .side-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 4px;
+            font-size: 15px;
+        }
+
+        .counter {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .counter.warning {
+            background: #ffe7e7;
+            color: var(--danger);
+        }
+
+        .workflow-card,
+        .request-info {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .card-title {
+            padding: 15px;
+            font-size: 17px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* =========================
+           WORKFLOW
+        ========================= */
+
+        .workflow {
+            padding: 16px;
+        }
+
+        .workflow-step {
+            position: relative;
+            display: flex;
+            gap: 12px;
+            padding-bottom: 22px;
+        }
+
+        .workflow-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .workflow-step::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            top: 23px;
+            width: 2px;
+            height: calc(100% - 15px);
+            background: #d9e0e7;
+        }
+
+        .workflow-step:last-child::after {
+            display: none;
+        }
+
+        .step-dot {
+            z-index: 2;
+            flex-shrink: 0;
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            border: 2px solid #b8c3cf;
+            background: white;
+        }
+
+        .workflow-step.active .step-dot {
+            border: 5px solid #2585dc;
+            box-shadow: 0 0 0 2px #d9edff;
+        }
+
+        .workflow-step.completed .step-dot {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .workflow-step.rejected .step-dot {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .step-status {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .workflow-step.active .step-title {
+            color: var(--blue);
+        }
+
+        .request-info {
+            padding-bottom: 10px;
+        }
+
+        .request-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 15px;
+            font-size: 13px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 5px;
+            background: #fff0c2;
+            color: #805f00;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .form-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .form-header h1 {
+            margin: 0 0 7px;
+            font-size: 28px;
+        }
+
+        .form-header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .section {
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 20px;
+            color: #102a43;
+        }
+
+        .section-icon {
+            font-size: 23px;
+        }
+
+        /* =========================
+           FIELDS
+        ========================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px 25px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #ccd5df;
+            border-radius: 6px;
+            background: white;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, .10);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .input-unit {
+            display: flex;
+            direction: ltr;
+        }
+
+        .input-unit input {
+            direction: rtl;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .unit {
+            min-width: 55px;
+            background: #f1f4f7;
+            border: 1px solid #ccd5df;
+            border-right: none;
+            border-radius: 6px 0 0 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #566573;
+        }
+
+        .calculated {
+            background: var(--blue-light);
+            font-weight: bold;
+        }
+
+        /* =========================
+           RADIO
+        ========================= */
+
+        .radio-row {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .radio {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-weight: normal;
+        }
+
+        .radio input {
+            width: auto;
+        }
+
+        /* =========================
+           NOTICE
+        ========================= */
+
+        .notice {
+            margin-top: 18px;
+            padding: 12px 15px;
+            background: #fff7d6;
+            border-right: 4px solid #e7ac00;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           ATTACHMENTS
+        ========================= */
+
+        .upload-area {
+            border: 2px dashed #72afe5;
+            border-radius: 8px;
+            background: #f8fbff;
+            min-height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        .upload-area:hover {
+            background: #eef7ff;
+        }
+
+        .upload-icon {
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .upload-text {
+            color: #4a657d;
+            font-size: 14px;
+        }
+
+        .file-list {
+            margin-top: 12px;
+        }
+
+        .file-item {
+            padding: 8px 12px;
+            background: #f5f7f9;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        /* =========================
+           APPROVALS
+        ========================= */
+
+        .approval-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .approval {
+            border: 1px solid var(--border);
+            background: #fafcfd;
+            padding: 14px;
+            border-radius: 7px;
+        }
+
+        .approval-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           DEADLINE
+        ========================= */
+
+        .deadline {
+            margin-top: 20px;
+            background: #edf7ff;
+            color: #14548a;
+            padding: 11px;
+            text-align: center;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .form-footer {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 6px;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d3b57;
+        }
+
+        .btn-secondary {
+            background: #edf1f5;
+            color: #333;
+        }
+
+        .success-message {
+            display: none;
+            margin: 0 30px 25px;
+            padding: 14px;
+            background: #e3f7ea;
+            border: 1px solid #9bd2ae;
+            color: #22683a;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+                width: 230px;
+            }
+
+            .approval-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .top-header {
+                padding: 0 15px;
+            }
+
+            .top-menu {
+                display: none;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-left: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .workflow {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .workflow-step::after {
+                display: none;
+            }
+
+            .main {
+                padding: 12px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .approval-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .brand-name {
+                display: none;
+            }
+
+            .brand-logo {
+                font-size: 25px;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .form-header h1 {
+                font-size: 22px;
+            }
+
+            .workflow {
+                grid-template-columns: 1fr;
+            }
+
+            .form-footer {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         TOP HEADER
+    ========================== -->
+
+    <header class="top-header">
+
+        <div class="brand">
+            <div>
+                <div class="brand-logo">NAIA</div>
+                <div class="brand-name">DEVELOPMENTS</div>
+            </div>
+        </div>
+
+        <nav class="top-menu">
+
+            <a href="#">الصفحة الرئيسية</a>
+
+            <a href="#" class="active">
+                طلبات المراجعة
+            </a>
+
+            <a href="#">
+                التقارير
+            </a>
+
+        </nav>
+
+        <div class="user-info">
+
+            <div>
+                <strong>إسلام السيد</strong>
+                <br>
+                <small>قسم تقنية المعلومات</small>
+            </div>
+
+            <div class="user-avatar">
+                إ
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         PAGE LAYOUT
+    ========================== -->
+
+    <div class="layout">
+
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside class="sidebar">
+
+            <button
+                class="new-request"
+                onclick="newRequest()">
+
+                + طلب مراجعة جديد
+
+            </button>
+
+
+            <div class="side-menu">
+
+                <div class="side-item">
+                    <span class="counter">12</span>
+                    <span>جميع الطلبات</span>
+                </div>
+
+                <div class="side-item">
+                    <span class="counter">6</span>
+                    <span>قيد المراجعة</span>
+                </div>
+
+                <div class="side-item">
+                    <span class="counter">5</span>
+                    <span>مكتملة</span>
+                </div>
+
+                <div class="side-item">
+                    <span class="counter">1</span>
+                    <span>مرفوضة</span>
+                </div>
+
+                <div class="side-item">
+                    <span class="counter warning">2</span>
+                    <span>متأخرة عن الموعد</span>
+                </div>
+
+            </div>
+
+
+            <!-- WORKFLOW -->
+
+            <div class="workflow-card">
+
+                <div class="card-title">
+                    سير المراجعة
+                </div>
+
+                <div class="workflow">
+
+
+                    <div class="workflow-step active">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                تم تقديم الطلب
+                            </div>
+
+                            <div class="step-status">
+                                الطلب قيد المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                إدارة الوثائق والمستندات
+                            </div>
+
+                            <div class="step-status">
+                                في انتظار المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                الإدارة الهندسية
+                            </div>
+
+                            <div class="step-status">
+                                لم يتم المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                الإدارة المالية
+                            </div>
+
+                            <div class="step-status">
+                                لم يتم المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                المستشار القانوني
+                            </div>
+
+                            <div class="step-status">
+                                لم يتم المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                المدير التنفيذي
+                            </div>
+
+                            <div class="step-status">
+                                لم يتم المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="step-dot"></div>
+
+                        <div class="step-content">
+
+                            <div class="step-title">
+                                رئيس مجلس الإدارة
+                            </div>
+
+                            <div class="step-status">
+                                لم يتم المراجعة
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- REQUEST INFO -->
+
+            <div class="request-info">
+
+                <div class="card-title">
+                    معلومات الطلب
+                </div>
+
+                <div class="request-row">
+                    <span>رقم الطلب</span>
+                    <strong id="requestNumber">مسودة</strong>
+                </div>
+
+                <div class="request-row">
+                    <span>حالة الطلب</span>
+                    <span class="status">مسودة</span>
+                </div>
+
+                <div class="request-row">
+                    <span>تاريخ الإنشاء</span>
+                    <span id="createdDate">—</span>
+                </div>
+
+                <div class="request-row">
+                    <span>آخر تحديث</span>
+                    <span>—</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =========================
+             MAIN FORM
+        ========================== -->
+
+        <main class="main">
+
+            <div class="breadcrumb">
+                طلبات المراجعة / طلب جديد
+            </div>
+
+
+            <form
+                class="form-card"
+                id="contractForm">
+
+
+                <!-- HEADER -->
+
+                <div class="form-header">
+
+                    <h1>
+                        استمارة مراجعة عقد
+                    </h1>
+
+                    <p>
+                        شركة نايا للتطوير العقاري (ش.م.م)
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     CONTRACT DATA
+                ========================== -->
+
+                <section class="section">
+
+                    <div class="section-header">
+
+                        <h2 class="section-title">
+                            استمارة مراجعة عقد بيع وحدة رقم
+                        </h2>
+
+                        <span class="section-icon">
+                            📄
+                        </span>
+
+                    </div>
+
+
+                    <div class="grid">
+
+
+                        <div class="field">
+
+                            <label>
+                                تاريخ التعاقد
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="contractDate"
+                                required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                اسم العميل
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerName"
+                                placeholder="اسم العميل"
+                                required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                مساحة الوحدة
+                                <span class="required">*</span>
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="area"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="مثال: 120"
+                                    required>
+
+                                <span class="unit">
+                                    م²
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                المشروع
+                                <span class="required">*</span>
+                            </label>
+
+                            <select id="project" required>
+
+                                <option value="">
+                                    اختر المشروع
+                                </option>
+
+                                <option>
+                                    نايا باي رأس الحكمة
+                                </option>
+
+                                <option>
+                                    نايا ويست
+                                </option>
+
+                                <option>
+                                    مشروع آخر
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                رقم الوحدة
+                            </label>
+
+                            <input
+                                type="text"
+                                id="unitNumber"
+                                placeholder="رقم الوحدة">
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     FINANCIAL DATA
+                ========================== -->
+
+                <section class="section">
+
+                    <div class="section-header">
+
+                        <h2 class="section-title">
+                            البيانات المالية
+                        </h2>
+
+                        <span class="section-icon">
+                            💰
+                        </span>
+
+                    </div>
+
+
+                    <div class="grid">
+
+
+                        <div class="field">
+
+                            <label>
+                                دفعة التعاقد
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="contractPayment"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="مثال: 500,000">
+
+                                <span class="unit">
+                                    ج.م
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                سعر المتر
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="meterPrice"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="مثال: 50,000">
+
+                                <span class="unit">
+                                    ج.م
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                إجمالي قيمة الوحدة
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="text"
+                                    id="unitTotal"
+                                    class="calculated"
+                                    readonly
+                                    value="0.00">
+
+                                <span class="unit">
+                                    ج.م
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                المسدد حتى التعاقد
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="paidContract"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="مثال: 500,000">
+
+                                <span class="unit">
+                                    ج.م
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                نسبة المسدد حتى التعاقد
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="text"
+                                    id="contractPercentage"
+                                    class="calculated"
+                                    readonly
+                                    value="0.00">
+
+                                <span class="unit">
+                                    %
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                المسدد حتى الاستلام
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="paidDelivery"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="مثال: 1,000,000">
+
+                                <span class="unit">
+                                    ج.م
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                نسبة المسدد حتى الاستلام
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="text"
+                                    id="deliveryPercentage"
+                                    class="calculated"
+                                    readonly
+                                    value="0.00">
+
+                                <span class="unit">
+                                    %
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     CHEQUES
+                ========================== -->
+
+                <section class="section">
+
+                    <div class="section-header">
+
+                        <h2 class="section-title">
+                            بيان الشيكات
+                        </h2>
+
+                        <span class="section-icon">
+                            💳
+                        </span>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            مذكرة خصم
+                        </label>
+
+                        <div class="radio-row">
+
+                            <label class="radio">
+
+                                <input
+                                    type="radio"
+                                    name="discountMemo"
+                                    value="يوجد">
+
+                                يوجد
+
+                            </label>
+
+
+                            <label class="radio">
+
+                                <input
+                                    type="radio"
+                                    name="discountMemo"
+                                    value="لا يوجد"
+                                    checked>
+
+                                لا يوجد
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="notice">
+
+                        <strong>ملاحظة:</strong>
+
+                        يتم إضافة الموطن المختار للعميل أثناء استلام نسخة العقد
+                        للعاملين بالخارج أو غير المصريين.
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     NOTES
+                ========================== -->
+
+                <section class="section">
+
+                    <div class="section-header">
+
+                        <h2 class="section-title">
+                            الملاحظات
+                        </h2>
+
+                        <span class="section-icon">
+                            💬
+                        </span>
+
+                    </div>
+
+
+                    <div class="grid">
+
+
+                        <div class="field">
+
+                            <label>
+                                ملاحظات مالية
+                            </label>
+
+                            <textarea
+                                id="financialNotes"
+                                placeholder="اكتب الملاحظات المالية هنا ..."></textarea>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                ملاحظات قانونية
+                            </label>
+
+                            <textarea
+                                id="legalNotes"
+                                placeholder="اكتب الملاحظات القانونية هنا ..."></textarea>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     ATTACHMENTS
+                ========================== -->
+
+                <section class="section">
+
+                    <div class="section-header">
+
+                        <h2 class="section-title">
+                            المرفقات
+                        </h2>
+
+                        <span class="section-icon">
+                            📎
+                        </span>
+
+                    </div>
+
+
+                    <label
+                        for="attachments"
+                        class="upload-area">
+
+                        <div>
+
+                            <div class="upload-icon">
+                                ☁️
+                            </div>
+
+                            <div class="upload-text">
+
+                                <strong>
+                                    اضغط لاختيار الملفات أو اسحبها هنا
+                                </strong>
+
+                                <br>
+
+                                PDF, JPG, PNG
+                                — بحد أقصى 10 ميجابايت لكل ملف
+
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="attachments"
+                        multiple
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        style="display:none;">
+
+
+                    <div
+                        class="file-list"
+                        id="fileList">
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     APPROVALS
+                ========================== -->
+
+                <section class="section">
+
+                    <div class="section-header">
+
+                        <h2 class="section-title">
+                            المراجعات والاعتمادات
+                        </h2>
+
+                        <span class="section-icon">
+                            👥
+                        </span>
+
+                    </div>
+
+
+                    <div class="approval-grid">
+
+
+                        <div class="approval">
+
+                            <div class="approval-title">
+                                إدارة الوثائق والمستندات
+                            </div>
+
+                            <input
+                                type="text"
+                                id="documentsApproval"
+                                placeholder="اسم المراجع">
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-title">
+                                الإدارة الهندسية
+                            </div>
+
+                            <input
+                                type="text"
+                                id="engineeringApproval"
+                                placeholder="اسم المراجع">
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-title">
+                                الإدارة المالية
+                            </div>
+
+                            <input
+                                type="text"
+                                id="financeApproval"
+                                placeholder="اسم المراجع">
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-title">
+                                المستشار القانوني
+                            </div>
+
+                            <input
+                                type="text"
+                                id="legalApproval"
+                                placeholder="اسم المراجع">
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-title">
+                                المدير التنفيذي
+                            </div>
+
+                            <input
+                                type="text"
+                                id="executiveApproval"
+                                placeholder="اسم المراجع">
+
+                        </div>
+
+
+                        <div class="approval">
+
+                            <div class="approval-title">
+                                رئيس مجلس الإدارة
+                            </div>
+
+                            <input
+                                type="text"
+                                id="chairmanApproval"
+                                placeholder="اسم المراجع">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="deadline">
+
+                        ⏱ مدة المراجعة بكل إدارة بحد أقصى 48 ساعة.
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     FOOTER
+                ========================== -->
+
+                <div class="form-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="resetForm()">
+
+                        🗑 مسح البيانات
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        ➤ إرسال للمراجعة
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="success-message"
+                    id="successMessage">
+
+                    تم إنشاء طلب المراجعة بنجاح.
+
+                    <br>
+
+                    رقم الطلب:
+
+                    <strong id="successRequestNumber"></strong>
+
+                    <br><br>
+
+                    الحالة الحالية:
+
+                    <strong>
+                        قيد مراجعة إدارة الوثائق والمستندات
+                    </strong>
+
+                </div>
+
+
+            </form>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /*
+         * =========================
+         * ELEMENTS
+         * =========================
+         */
+
+        const area =
+            document.getElementById("area");
+
+        const meterPrice =
+            document.getElementById("meterPrice");
+
+        const unitTotal =
+            document.getElementById("unitTotal");
+
+        const paidContract =
+            document.getElementById("paidContract");
+
+        const paidDelivery =
+            document.getElementById("paidDelivery");
+
+        const contractPercentage =
+            document.getElementById("contractPercentage");
+
+        const deliveryPercentage =
+            document.getElementById("deliveryPercentage");
+
+
+        /*
+         * =========================
+         * CALCULATE FINANCIAL DATA
+         * =========================
+         */
+
+        function calculateFinancialData() {
+
+            const areaValue =
+                parseFloat(area.value) || 0;
+
+            const meterPriceValue =
+                parseFloat(meterPrice.value) || 0;
+
+            const total =
+                areaValue * meterPriceValue;
+
+
+            /*
+             * Total unit value
+             */
+
+            unitTotal.value =
+                total.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
+
+            /*
+             * Contract payment percentage
+             */
+
+            const paidContractValue =
+                parseFloat(paidContract.value) || 0;
+
+            if (total > 0) {
+
+                const contractPercent =
+                    (paidContractValue / total) * 100;
+
+                contractPercentage.value =
+                    contractPercent.toFixed(2);
+
+            } else {
+
+                contractPercentage.value = "0.00";
+
+            }
+
+
+            /*
+             * Delivery payment percentage
+             */
+
+            const paidDeliveryValue =
+                parseFloat(paidDelivery.value) || 0;
+
+            if (total > 0) {
+
+                const deliveryPercent =
+                    (paidDeliveryValue / total) * 100;
+
+                deliveryPercentage.value =
+                    deliveryPercent.toFixed(2);
+
+            } else {
+
+                deliveryPercentage.value = "0.00";
+
+            }
+
+        }
+
+
+        area.addEventListener(
+            "input",
+            calculateFinancialData
+        );
+
+        meterPrice.addEventListener(
+            "input",
+            calculateFinancialData
+        );
+
+        paidContract.addEventListener(
+            "input",
+            calculateFinancialData
+        );
+
+        paidDelivery.addEventListener(
+            "input",
+            calculateFinancialData
+        );
+
+
+        /*
+         * =========================
+         * FILE UPLOAD DISPLAY
+         * =========================
+         */
+
+        document
+            .getElementById("attachments")
+            .addEventListener("change", function () {
+
+                const fileList =
+                    document.getElementById("fileList");
+
+                fileList.innerHTML = "";
+
+
+                Array.from(this.files)
+                    .forEach(function (file) {
+
+                        const item =
+                            document.createElement("div");
+
+                        item.className =
+                            "file-item";
+
+                        item.textContent =
+                            "📎 " +
+                            file.name +
+                            " (" +
+                            formatFileSize(file.size) +
+                            ")";
+
+                        fileList.appendChild(item);
+
+                    });
+
+            });
+
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) {
+                return bytes + " B";
+            }
+
+            if (bytes < 1024 * 1024) {
+                return (
+                    (bytes / 1024).toFixed(1)
+                    + " KB"
+                );
+            }
+
+            return (
+                (bytes / (1024 * 1024)).toFixed(1)
+                + " MB"
+            );
+
+        }
+
+
+        /*
+         * =========================
+         * SUBMIT
+         * =========================
+         */
+
+        document
+            .getElementById("contractForm")
+            .addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+
+                /*
+                 * Generate temporary request number
+                 *
+                 * Later this will come from
+                 * SharePoint automatically.
+                 */
+
+                const year =
+                    new Date().getFullYear();
+
+                const random =
+                    Math.floor(
+                        10000 +
+                        Math.random() * 90000
+                    );
+
+                const requestNumber =
+                    "CR-" +
+                    year +
+                    "-" +
+                    random;
+
+
+                /*
+                 * Update sidebar
+                 */
+
+                document
+                    .getElementById("requestNumber")
+                    .textContent =
+                    requestNumber;
+
+
+                document
+                    .getElementById("createdDate")
+                    .textContent =
+                    new Date()
+                    .toLocaleDateString("ar-EG");
+
+
+                /*
+                 * Show success message
+                 */
+
+                document
+                    .getElementById("successRequestNumber")
+                    .textContent =
+                    requestNumber;
+
+
+                document
+                    .getElementById("successMessage")
+                    .style.display =
+                    "block";
+
+
+                /*
+                 * Scroll to result
+                 */
+
+                document
+                    .getElementById("successMessage")
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+            });
+
+
+        /*
+         * =========================
+         * RESET
+         * =========================
+         */
+
+        function resetForm() {
+
+            if (
+                !confirm(
+                    "هل تريد مسح جميع بيانات الطلب؟"
+                )
+            ) {
+                return;
+            }
+
+
+            document
+                .getElementById("contractForm")
+                .reset();
+
+
+            unitTotal.value = "0.00";
+
+            contractPercentage.value = "0.00";
+
+            deliveryPercentage.value = "0.00";
+
+
+            document
+                .getElementById("fileList")
+                .innerHTML = "";
+
+
+            document
+                .getElementById("successMessage")
+                .style.display = "none";
+
+
+            document
+                .getElementById("requestNumber")
+                .textContent = "مسودة";
+
+
+            document
+                .getElementById("createdDate")
+                .textContent = "—";
+
+        }
+
+
+        /*
+         * =========================
+         * NEW REQUEST
+         * =========================
+         */
+
+        function newRequest() {
+
+            resetForm();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /*
+         * =========================
+         * SET DEFAULT DATE
+         * =========================
+         */
+
+        document
+            .getElementById("contractDate")
+            .value =
+            new Date()
+            .toISOString()
+            .split("T")[0];
+
+    </script>
+
+</body>
+
+</html>
