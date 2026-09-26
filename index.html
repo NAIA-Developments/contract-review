@@ -723,6 +723,122 @@
             color: #14548a;
         }
 
+
+        /* =========================
+           REVIEW ACTIONS
+        ========================== */
+
+        .review-actions {
+            display: none;
+            margin-bottom: 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .review-actions-body {
+            padding: 16px;
+        }
+
+        .review-action-current {
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            background: #edf7ff;
+            color: #14548a;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .review-action-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .review-action-input,
+        .review-action-comment {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 13px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        .review-action-comment {
+            min-height: 85px;
+            resize: vertical;
+        }
+
+        .review-action-input:focus,
+        .review-action-comment:focus {
+            border-color: #3b82c4;
+            box-shadow: 0 0 0 2px rgba(59,130,196,.08);
+        }
+
+        .review-action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .review-action-btn {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .review-action-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .review-action-approve {
+            background: #198754;
+            color: white;
+        }
+
+        .review-action-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .review-action-comment-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .review-action-message {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .review-action-message.success {
+            display: block;
+            background: #e8f7ee;
+            color: #176b3a;
+        }
+
+        .review-action-message.error {
+            display: block;
+            background: #fff0f0;
+            color: var(--danger);
+        }
+
         /* =========================
            REVIEW HISTORY
         ========================== */
@@ -1378,6 +1494,85 @@
                 <div
                     id="detailDeadlineStatus"
                     class="deadline-status">
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 REVIEW ACTIONS
+            ========================== -->
+
+            <div
+                class="review-actions"
+                id="reviewActions">
+
+                <div class="card-title">
+                    ⚙️ إجراءات المراجعة
+                </div>
+
+                <div class="review-actions-body">
+
+                    <div
+                        id="reviewActionCurrent"
+                        class="review-action-current">
+                        اختر طلبًا لعرض إجراءات المراجعة.
+                    </div>
+
+                    <label
+                        class="review-action-label"
+                        for="reviewerName">
+                        اسم المراجع
+                    </label>
+
+                    <input
+                        type="text"
+                        id="reviewerName"
+                        class="review-action-input"
+                        value="إسلام السيد"
+                        placeholder="اسم المراجع">
+
+                    <label
+                        class="review-action-label"
+                        for="reviewActionComments">
+                        الملاحظات
+                    </label>
+
+                    <textarea
+                        id="reviewActionComments"
+                        class="review-action-comment"
+                        placeholder="اكتب ملاحظات المراجعة هنا..."></textarea>
+
+                    <div class="review-action-buttons">
+
+                        <button
+                            type="button"
+                            id="approveRequestButton"
+                            class="review-action-btn review-action-approve">
+                            ✓ اعتماد ومتابعة
+                        </button>
+
+                        <button
+                            type="button"
+                            id="rejectRequestButton"
+                            class="review-action-btn review-action-reject">
+                            ↩ رفض / إرجاع
+                        </button>
+
+                        <button
+                            type="button"
+                            id="commentRequestButton"
+                            class="review-action-btn review-action-comment-btn">
+                            💬 إضافة تعليق
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="reviewActionMessage"
+                        class="review-action-message">
+                    </div>
+
                 </div>
 
             </div>
@@ -3082,6 +3277,8 @@
             requestDetails.style.display =
                 "block";
 
+            updateReviewActions(request);
+
         }
 
 
@@ -3219,6 +3416,264 @@
 
         const historyList =
             document.getElementById("historyList");
+
+        const reviewActions =
+            document.getElementById("reviewActions");
+
+        const reviewActionCurrent =
+            document.getElementById("reviewActionCurrent");
+
+        const reviewerName =
+            document.getElementById("reviewerName");
+
+        const reviewActionComments =
+            document.getElementById("reviewActionComments");
+
+        const approveRequestButton =
+            document.getElementById("approveRequestButton");
+
+        const rejectRequestButton =
+            document.getElementById("rejectRequestButton");
+
+        const commentRequestButton =
+            document.getElementById("commentRequestButton");
+
+        const reviewActionMessage =
+            document.getElementById("reviewActionMessage");
+
+        let selectedRequest = null;
+
+
+        function showReviewActionMessage(message, type) {
+
+            reviewActionMessage.textContent = message;
+            reviewActionMessage.className =
+                "review-action-message " + type;
+
+        }
+
+
+        function clearReviewActionMessage() {
+
+            reviewActionMessage.textContent = "";
+            reviewActionMessage.className =
+                "review-action-message";
+
+        }
+
+
+        function updateReviewActions(request) {
+
+            selectedRequest = request || null;
+
+            if (!request) {
+
+                reviewActions.style.display = "none";
+                return;
+
+            }
+
+            reviewActions.style.display = "block";
+
+            reviewActionCurrent.innerHTML =
+                "<strong>المرحلة الحالية:</strong> " +
+                escapeHtml(request.CurrentStage || "—") +
+                "<br><strong>حالة الطلب:</strong> " +
+                escapeHtml(request.Status || "—");
+
+            clearReviewActionMessage();
+
+            reviewActionComments.value = "";
+
+            const isClosed =
+                request.DeadlineStatus === "completed" ||
+                String(request.Status || "").includes("تمت الموافقة");
+
+            approveRequestButton.disabled = isClosed;
+            rejectRequestButton.disabled = isClosed;
+            commentRequestButton.disabled = isClosed;
+
+        }
+
+
+        async function performReviewAction(action) {
+
+            if (!selectedRequest || !selectedRequest.RequestID) {
+
+                showReviewActionMessage(
+                    "من فضلك ابحث عن طلب أولاً.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            const actionBy =
+                reviewerName.value.trim() || "إسلام السيد";
+
+            const comments =
+                reviewActionComments.value.trim();
+
+            const labels = {
+                approve: "اعتماد ومتابعة",
+                reject: "رفض / إرجاع",
+                comment: "إضافة تعليق"
+            };
+
+            if (action === "comment" && !comments) {
+
+                showReviewActionMessage(
+                    "اكتب الملاحظة قبل إضافة التعليق.",
+                    "error"
+                );
+
+                reviewActionComments.focus();
+                return;
+
+            }
+
+            if (action === "reject" && !comments) {
+
+                showReviewActionMessage(
+                    "اكتب سبب الرفض / الإرجاع أولاً.",
+                    "error"
+                );
+
+                reviewActionComments.focus();
+                return;
+
+            }
+
+            const confirmed = confirm(
+                "هل أنت متأكد من تنفيذ: " +
+                labels[action] +
+                "؟"
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            const buttons = [
+                approveRequestButton,
+                rejectRequestButton,
+                commentRequestButton
+            ];
+
+            buttons.forEach(function (button) {
+                button.disabled = true;
+            });
+
+            showReviewActionMessage(
+                "جاري تنفيذ الإجراء...",
+                "success"
+            );
+
+            try {
+
+                const response = await fetch(
+                    API_URL,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+                        },
+                        body: JSON.stringify({
+                            action: "reviewAction",
+                            requestId:
+                                selectedRequest.RequestID,
+                            reviewAction: action,
+                            actionBy: actionBy,
+                            comments: comments
+                        })
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(
+                        result.error ||
+                        "تعذر تنفيذ إجراء المراجعة."
+                    );
+                }
+
+                if (result.request) {
+                    selectedRequest = result.request;
+                    displayRequest(result.request);
+                    updateReviewActions(result.request);
+                }
+
+                await loadRequestHistory(
+                    selectedRequest.RequestID
+                );
+
+                showReviewActionMessage(
+                    result.message ||
+                    "تم تنفيذ الإجراء بنجاح.",
+                    "success"
+                );
+
+                reviewActionComments.value = "";
+
+            } catch (error) {
+
+                console.error(
+                    "Review Action Error:",
+                    error
+                );
+
+                showReviewActionMessage(
+                    error.message ||
+                    "حدث خطأ أثناء تنفيذ الإجراء.",
+                    "error"
+                );
+
+            } finally {
+
+                if (selectedRequest) {
+                    const isClosed =
+                        selectedRequest.DeadlineStatus === "completed" ||
+                        String(selectedRequest.Status || "").includes("تمت الموافقة");
+
+                    approveRequestButton.disabled = isClosed;
+                    rejectRequestButton.disabled = isClosed;
+                    commentRequestButton.disabled = isClosed;
+                } else {
+                    buttons.forEach(function (button) {
+                        button.disabled = false;
+                    });
+                }
+
+            }
+
+        }
+
+
+        approveRequestButton.addEventListener(
+            "click",
+            function () {
+                performReviewAction("approve");
+            }
+        );
+
+
+        rejectRequestButton.addEventListener(
+            "click",
+            function () {
+                performReviewAction("reject");
+            }
+        );
+
+
+        commentRequestButton.addEventListener(
+            "click",
+            function () {
+                performReviewAction("comment");
+            }
+        );
 
 
         function escapeHtml(value) {
@@ -3529,6 +3984,18 @@
             if (reviewHistory) {
                 reviewHistory.style.display = "none";
             }
+
+            if (reviewActions) {
+                reviewActions.style.display = "none";
+            }
+
+            selectedRequest = null;
+
+            if (reviewActionComments) {
+                reviewActionComments.value = "";
+            }
+
+            clearReviewActionMessage();
 
             if (historyList) {
                 historyList.innerHTML = "";
