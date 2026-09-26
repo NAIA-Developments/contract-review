@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -3581,12 +3582,19 @@
                                 "text/plain;charset=utf-8"
                         },
                         body: JSON.stringify({
+                            // "action" selects the API endpoint.
                             action: "reviewAction",
+
+                            // "Action" is the review decision expected by the backend.
+                            Action: action,
+
                             requestId:
                                 selectedRequest.RequestID,
                             reviewAction: action,
                             actionBy: actionBy,
-                            comments: comments
+                            ActionBy: actionBy,
+                            comments: comments,
+                            Comments: comments
                         })
                     }
                 );
