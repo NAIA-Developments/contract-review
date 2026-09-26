@@ -723,6 +723,97 @@
             color: #14548a;
         }
 
+        /* =========================
+           REVIEW HISTORY
+        ========================== */
+
+        .review-history {
+            display: none;
+            margin-bottom: 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .history-list {
+            padding: 0;
+        }
+
+        .history-item {
+            padding: 14px 16px;
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .history-stage {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .history-action {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: #edf7ff;
+            color: #14548a;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .history-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .history-comments {
+            padding: 9px 10px;
+            border-radius: 6px;
+            background: #f7f8fa;
+            color: #333;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .history-empty,
+        .history-loading,
+        .history-error {
+            padding: 18px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .history-error {
+            color: var(--danger);
+            background: #fff0f0;
+        }
+
+        @media (max-width: 700px) {
+            .history-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+
         .deadline-status.warning {
             background: #fff7d6;
             color: #805f00;
@@ -1287,6 +1378,25 @@
                 <div
                     id="detailDeadlineStatus"
                     class="deadline-status">
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 REVIEW HISTORY
+            ========================== -->
+
+            <div
+                class="review-history"
+                id="reviewHistory">
+
+                <div class="card-title">
+                    🕘 سجل المراجعات والإجراءات
+                </div>
+
+                <div
+                    id="historyList"
+                    class="history-list">
                 </div>
 
             </div>
@@ -3058,6 +3168,11 @@
                 );
 
 
+                await loadRequestHistory(
+                    result.request.RequestID || requestId
+                );
+
+
                 showSearchMessage(
                     "تم العثور على الطلب بنجاح.",
                     "success"
@@ -3085,6 +3200,198 @@
 
                 searchRequestButton.textContent =
                     originalText;
+
+            }
+
+        }
+
+
+
+
+        /*
+         * =========================
+         * REVIEW HISTORY
+         * =========================
+         */
+
+        const reviewHistory =
+            document.getElementById("reviewHistory");
+
+        const historyList =
+            document.getElementById("historyList");
+
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function getHistoryValue(item, key) {
+
+            if (
+                item === null ||
+                item === undefined
+            ) {
+                return "";
+            }
+
+            return item[key] ?? "";
+
+        }
+
+
+        function displayHistory(history) {
+
+            reviewHistory.style.display = "block";
+
+            if (
+                !Array.isArray(history) ||
+                history.length === 0
+            ) {
+
+                historyList.innerHTML =
+                    '<div class="history-empty">لا توجد إجراءات أو مراجعات مسجلة لهذا الطلب حتى الآن.</div>';
+
+                return;
+
+            }
+
+
+            historyList.innerHTML =
+                history.map(function (item) {
+
+                    const stage =
+                        getHistoryValue(item, "Stage") ||
+                        "—";
+
+                    const action =
+                        getHistoryValue(item, "Action") ||
+                        "—";
+
+                    const comments =
+                        getHistoryValue(item, "Comments");
+
+                    const actionBy =
+                        getHistoryValue(item, "ActionBy") ||
+                        "—";
+
+                    const actionAt =
+                        getHistoryValue(item, "ActionAt");
+
+                    const oldStatus =
+                        getHistoryValue(item, "OldStatus");
+
+                    const newStatus =
+                        getHistoryValue(item, "NewStatus");
+
+                    return `
+                        <div class="history-item">
+
+                            <div class="history-top">
+
+                                <div class="history-stage">
+                                    ${escapeHtml(stage)}
+                                </div>
+
+                                <div class="history-action">
+                                    ${escapeHtml(action)}
+                                </div>
+
+                            </div>
+
+                            <div class="history-meta">
+                                <span>👤 ${escapeHtml(actionBy)}</span>
+                                <span>🕒 ${escapeHtml(formatDateTime(actionAt))}</span>
+                            </div>
+
+                            ${oldStatus || newStatus ? `
+                                <div class="history-meta">
+                                    ${oldStatus ? `<span>الحالة السابقة: ${escapeHtml(oldStatus)}</span>` : ""}
+                                    ${newStatus ? `<span>الحالة الجديدة: ${escapeHtml(newStatus)}</span>` : ""}
+                                </div>
+                            ` : ""}
+
+                            ${comments ? `
+                                <div class="history-comments">
+                                    ${escapeHtml(comments)}
+                                </div>
+                            ` : ""}
+
+                        </div>
+                    `;
+
+                }).join("");
+
+        }
+
+
+        async function loadRequestHistory(requestId) {
+
+            reviewHistory.style.display = "block";
+
+            historyList.innerHTML =
+                '<div class="history-loading">جاري تحميل سجل المراجعات...</div>';
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "text/plain;charset=utf-8"
+                            },
+                            body: JSON.stringify({
+                                action: "getHistory",
+                                requestId: requestId
+                            })
+                        }
+                    );
+
+                const result =
+                    await response.json();
+
+                if (!result.success) {
+                    throw new Error(
+                        result.error ||
+                        "تعذر تحميل سجل المراجعات"
+                    );
+                }
+
+                displayHistory(
+                    result.history || []
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "History Error:",
+                    error
+                );
+
+                historyList.innerHTML =
+                    '<div class="history-error">' +
+                    escapeHtml(
+                        error.message ||
+                        "حدث خطأ أثناء تحميل سجل المراجعات."
+                    ) +
+                    '</div>';
 
             }
 
@@ -3217,6 +3524,14 @@
 
             if (requestDetails) {
                 requestDetails.style.display = "none";
+            }
+
+            if (reviewHistory) {
+                reviewHistory.style.display = "none";
+            }
+
+            if (historyList) {
+                historyList.innerHTML = "";
             }
 
         }
