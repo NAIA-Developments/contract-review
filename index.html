@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -609,6 +610,135 @@
             font-weight: bold;
         }
 
+
+        /* =========================
+           REQUEST SEARCH
+        ========================== */
+
+        .request-search {
+            margin-bottom: 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .request-search .card-title {
+            background: #fafcfd;
+        }
+
+        .search-box {
+            padding: 15px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-row input {
+            flex: 1;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .search-btn {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            background: var(--blue);
+            color: white;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: #1265b7;
+        }
+
+        .search-btn:disabled {
+            opacity: .65;
+            cursor: wait;
+        }
+
+        .search-message {
+            display: none;
+            margin-top: 10px;
+            padding: 9px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .search-message.error {
+            display: block;
+            background: #fff0f0;
+            color: var(--danger);
+        }
+
+        .search-message.success {
+            display: block;
+            background: #e8f7ed;
+            color: var(--success);
+        }
+
+        .request-details {
+            display: none;
+            margin-bottom: 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .request-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+        }
+
+        .detail-item {
+            padding: 11px 15px;
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .detail-label {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .deadline-status {
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            background: #edf7ff;
+            color: #14548a;
+        }
+
+        .deadline-status.warning {
+            background: #fff7d6;
+            color: #805f00;
+        }
+
+        .deadline-status.overdue {
+            background: #fff0f0;
+            color: var(--danger);
+        }
+
+        .deadline-status.completed {
+            background: #e8f7ed;
+            color: var(--success);
+        }
+
         /* =========================
            RESPONSIVE
         ========================== */
@@ -1016,6 +1146,151 @@
 
             </div>
 
+
+
+            <!-- =========================
+                 SEARCH REQUEST
+            ========================== -->
+
+            <div class="request-search">
+
+                <div class="card-title">
+                    🔎 البحث عن طلب
+                </div>
+
+                <div class="search-box">
+
+                    <div class="search-row">
+
+                        <input
+                            type="text"
+                            id="searchRequestId"
+                            placeholder="مثال: CR-2026-00003"
+                            autocomplete="off">
+
+                        <button
+                            type="button"
+                            class="search-btn"
+                            id="searchRequestButton">
+
+                            بحث
+
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="searchMessage"
+                        class="search-message">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 REQUEST DETAILS
+            ========================== -->
+
+            <div
+                class="request-details"
+                id="requestDetails">
+
+                <div class="card-title">
+                    📋 بيانات الطلب
+                </div>
+
+                <div class="request-details-grid">
+
+                    <div class="detail-item">
+                        <div class="detail-label">رقم الطلب</div>
+                        <div class="detail-value" id="detailRequestId">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">اسم العميل</div>
+                        <div class="detail-value" id="detailClientName">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">تاريخ التعاقد</div>
+                        <div class="detail-value" id="detailContractDate">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">المشروع</div>
+                        <div class="detail-value" id="detailProject">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">رقم الوحدة</div>
+                        <div class="detail-value" id="detailUnitNumber">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">المساحة</div>
+                        <div class="detail-value" id="detailUnitArea">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">سعر المتر</div>
+                        <div class="detail-value" id="detailMeterPrice">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">إجمالي قيمة الوحدة</div>
+                        <div class="detail-value" id="detailUnitTotal">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">دفعة التعاقد</div>
+                        <div class="detail-value" id="detailContractPayment">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">المسدد حتى التعاقد</div>
+                        <div class="detail-value" id="detailPaidContract">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">المسدد حتى الاستلام</div>
+                        <div class="detail-value" id="detailPaidDelivery">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">مذكرة خصم</div>
+                        <div class="detail-value" id="detailCheques">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">المرحلة الحالية</div>
+                        <div class="detail-value" id="detailCurrentStage">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">حالة الطلب</div>
+                        <div class="detail-value" id="detailStatus">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">تاريخ الإنشاء</div>
+                        <div class="detail-value" id="detailCreatedAt">—</div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">آخر تحديث</div>
+                        <div class="detail-value" id="detailUpdatedAt">—</div>
+                    </div>
+
+                </div>
+
+                <div
+                    id="detailDeadlineStatus"
+                    class="deadline-status">
+                </div>
+
+            </div>
 
             <!-- REQUEST INFO -->
 
@@ -2369,6 +2644,478 @@
             );
 
 
+
+        /*
+         * =========================
+         * SEARCH REQUEST
+         * =========================
+         */
+
+        const searchRequestId =
+            document.getElementById("searchRequestId");
+
+        const searchRequestButton =
+            document.getElementById("searchRequestButton");
+
+        const searchMessage =
+            document.getElementById("searchMessage");
+
+        const requestDetails =
+            document.getElementById("requestDetails");
+
+
+        function showSearchMessage(message, type) {
+
+            searchMessage.textContent = message;
+
+            searchMessage.className =
+                "search-message " + type;
+
+        }
+
+
+        function clearSearchMessage() {
+
+            searchMessage.textContent = "";
+
+            searchMessage.className =
+                "search-message";
+
+        }
+
+
+        function formatDateTime(value) {
+
+            if (!value) {
+                return "—";
+            }
+
+            const date =
+                new Date(value);
+
+            if (isNaN(date.getTime())) {
+                return value;
+            }
+
+            return date.toLocaleString(
+                "ar-EG",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            );
+
+        }
+
+
+        function formatDateOnly(value) {
+
+            if (!value) {
+                return "—";
+            }
+
+            const date =
+                new Date(value);
+
+            if (isNaN(date.getTime())) {
+                return value;
+            }
+
+            return date.toLocaleDateString(
+                "ar-EG"
+            );
+
+        }
+
+
+        function formatNumber(value) {
+
+            if (
+                value === null ||
+                value === undefined ||
+                value === ""
+            ) {
+                return "—";
+            }
+
+            const number =
+                Number(
+                    String(value)
+                        .replace(/,/g, "")
+                );
+
+            if (isNaN(number)) {
+                return value;
+            }
+
+            return number.toLocaleString(
+                "en-US",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+        }
+
+
+        function setDetail(id, value) {
+
+            const element =
+                document.getElementById(id);
+
+            if (element) {
+                element.textContent =
+                    value || "—";
+            }
+
+        }
+
+
+        function displayRequest(request) {
+
+            setDetail(
+                "detailRequestId",
+                request.RequestID
+            );
+
+            setDetail(
+                "detailClientName",
+                request.ClientName
+            );
+
+            setDetail(
+                "detailContractDate",
+                formatDateOnly(request.ContractDate)
+            );
+
+            setDetail(
+                "detailProject",
+                request.Project
+            );
+
+            setDetail(
+                "detailUnitNumber",
+                request.UnitNumber
+            );
+
+            setDetail(
+                "detailUnitArea",
+                request.UnitArea
+                    ? formatNumber(request.UnitArea) + " م²"
+                    : "—"
+            );
+
+            setDetail(
+                "detailMeterPrice",
+                request.MeterPrice
+                    ? formatNumber(request.MeterPrice) + " ج.م"
+                    : "—"
+            );
+
+            setDetail(
+                "detailUnitTotal",
+                request.UnitTotal
+                    ? formatNumber(request.UnitTotal) + " ج.م"
+                    : "—"
+            );
+
+            setDetail(
+                "detailContractPayment",
+                request.ContractPayment
+                    ? formatNumber(request.ContractPayment) + " ج.م"
+                    : "—"
+            );
+
+            setDetail(
+                "detailPaidContract",
+                request.PaidContract
+                    ? formatNumber(request.PaidContract) + " ج.م"
+                    : "—"
+            );
+
+            setDetail(
+                "detailPaidDelivery",
+                request.PaidDelivery
+                    ? formatNumber(request.PaidDelivery) + " ج.م"
+                    : (
+                        request.DeliveryPayment
+                            ? formatNumber(request.DeliveryPayment) + " ج.م"
+                            : "—"
+                    )
+            );
+
+            setDetail(
+                "detailCheques",
+                request.Cheques
+            );
+
+            setDetail(
+                "detailCurrentStage",
+                request.CurrentStage
+            );
+
+            setDetail(
+                "detailStatus",
+                request.Status
+            );
+
+            setDetail(
+                "detailCreatedAt",
+                formatDateTime(request.CreatedAt)
+            );
+
+            setDetail(
+                "detailUpdatedAt",
+                formatDateTime(request.UpdatedAt)
+            );
+
+
+            /*
+             * Update sidebar
+             */
+
+            document
+                .getElementById("requestNumber")
+                .textContent =
+                request.RequestID || "—";
+
+
+            document
+                .getElementById("createdDate")
+                .textContent =
+                formatDateOnly(request.CreatedAt);
+
+
+            document
+                .getElementById("updatedDate")
+                .textContent =
+                formatDateOnly(request.UpdatedAt);
+
+
+            const statusElement =
+                document.querySelector(
+                    ".request-info .status"
+                );
+
+
+            if (statusElement) {
+
+                statusElement.textContent =
+                    request.Status || "—";
+
+            }
+
+
+            /*
+             * Deadline status
+             */
+
+            const deadlineElement =
+                document.getElementById(
+                    "detailDeadlineStatus"
+                );
+
+
+            deadlineElement.className =
+                "deadline-status";
+
+
+            if (request.DeadlineStatus === "overdue") {
+
+                deadlineElement.classList.add(
+                    "overdue"
+                );
+
+                deadlineElement.textContent =
+                    "⚠️ انتهت مدة المراجعة المحددة";
+
+            } else if (
+                request.DeadlineStatus === "warning"
+            ) {
+
+                deadlineElement.classList.add(
+                    "warning"
+                );
+
+                deadlineElement.textContent =
+                    "⏳ الموعد النهائي قريب";
+
+            } else if (
+                request.DeadlineStatus === "completed"
+            ) {
+
+                deadlineElement.classList.add(
+                    "completed"
+                );
+
+                deadlineElement.textContent =
+                    "✓ تم إغلاق الطلب";
+
+            } else if (
+                request.Deadline
+            ) {
+
+                deadlineElement.textContent =
+                    "⏱ الموعد النهائي: " +
+                    formatDateTime(
+                        request.Deadline
+                    );
+
+            } else {
+
+                deadlineElement.textContent =
+                    "لا يوجد موعد نهائي مسجل";
+
+            }
+
+
+            requestDetails.style.display =
+                "block";
+
+        }
+
+
+        async function searchRequest() {
+
+            const requestId =
+                searchRequestId.value.trim();
+
+
+            if (!requestId) {
+
+                showSearchMessage(
+                    "من فضلك أدخل رقم الطلب.",
+                    "error"
+                );
+
+                searchRequestId.focus();
+
+                return;
+
+            }
+
+
+            clearSearchMessage();
+
+            requestDetails.style.display =
+                "none";
+
+
+            const originalText =
+                searchRequestButton.textContent;
+
+
+            searchRequestButton.disabled =
+                true;
+
+            searchRequestButton.textContent =
+                "جاري البحث...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "text/plain;charset=utf-8"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    action:
+                                        "getRequest",
+
+                                    requestId:
+                                        requestId
+                                })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    throw new Error(
+                        result.error ||
+                        "لم يتم العثور على الطلب"
+                    );
+
+                }
+
+
+                displayRequest(
+                    result.request
+                );
+
+
+                showSearchMessage(
+                    "تم العثور على الطلب بنجاح.",
+                    "success"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Search Error:",
+                    error
+                );
+
+
+                showSearchMessage(
+                    error.message ||
+                    "حدث خطأ أثناء البحث عن الطلب.",
+                    "error"
+                );
+
+            } finally {
+
+                searchRequestButton.disabled =
+                    false;
+
+                searchRequestButton.textContent =
+                    originalText;
+
+            }
+
+        }
+
+
+        searchRequestButton.addEventListener(
+            "click",
+            searchRequest
+        );
+
+
+        searchRequestId.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    searchRequest();
+
+                }
+
+            }
+        );
+
+
         /*
          * =========================
          * RESET
@@ -2458,6 +3205,21 @@
 
             }
 
+
+            /*
+             * Clear request search
+             */
+
+            if (searchRequestId) {
+                searchRequestId.value = "";
+            }
+
+            clearSearchMessage();
+
+            if (requestDetails) {
+                requestDetails.style.display = "none";
+            }
+
         }
 
 
@@ -2501,3 +3263,4 @@
 </body>
 
 </html>
+```
