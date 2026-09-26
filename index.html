@@ -8,6 +8,7 @@
     <title>طلبات مراجعة العقود | NAIA Developments</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -35,7 +36,7 @@
 
         /* =========================
            TOP HEADER
-        ========================= */
+        ========================== */
 
         .top-header {
             height: 72px;
@@ -105,7 +106,7 @@
 
         /* =========================
            LAYOUT
-        ========================= */
+        ========================== */
 
         .layout {
             display: flex;
@@ -132,7 +133,7 @@
 
         /* =========================
            SIDEBAR
-        ========================= */
+        ========================== */
 
         .new-request {
             width: 100%;
@@ -198,7 +199,7 @@
 
         /* =========================
            WORKFLOW
-        ========================= */
+        ========================== */
 
         .workflow {
             padding: 16px;
@@ -274,6 +275,10 @@
             color: var(--blue);
         }
 
+        /* =========================
+           REQUEST INFO
+        ========================== */
+
         .request-info {
             padding-bottom: 10px;
         }
@@ -296,7 +301,7 @@
 
         /* =========================
            MAIN
-        ========================= */
+        ========================== */
 
         .breadcrumb {
             color: var(--muted);
@@ -352,7 +357,7 @@
 
         /* =========================
            FIELDS
-        ========================= */
+        ========================== */
 
         .grid {
             display: grid;
@@ -435,7 +440,7 @@
 
         /* =========================
            RADIO
-        ========================= */
+        ========================== */
 
         .radio-row {
             display: flex;
@@ -456,7 +461,7 @@
 
         /* =========================
            NOTICE
-        ========================= */
+        ========================== */
 
         .notice {
             margin-top: 18px;
@@ -470,7 +475,7 @@
 
         /* =========================
            ATTACHMENTS
-        ========================= */
+        ========================== */
 
         .upload-area {
             border: 2px dashed #72afe5;
@@ -513,7 +518,7 @@
 
         /* =========================
            APPROVALS
-        ========================= */
+        ========================== */
 
         .approval-grid {
             display: grid;
@@ -536,7 +541,7 @@
 
         /* =========================
            DEADLINE
-        ========================= */
+        ========================== */
 
         .deadline {
             margin-top: 20px;
@@ -551,7 +556,7 @@
 
         /* =========================
            FOOTER
-        ========================= */
+        ========================== */
 
         .form-footer {
             padding: 20px 30px;
@@ -582,6 +587,11 @@
             background: #1d3b57;
         }
 
+        .btn-primary:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
         .btn-secondary {
             background: #edf1f5;
             color: #333;
@@ -601,7 +611,7 @@
 
         /* =========================
            RESPONSIVE
-        ========================= */
+        ========================== */
 
         @media (max-width: 1000px) {
 
@@ -691,7 +701,9 @@
                 width: 100%;
             }
         }
+
     </style>
+
 </head>
 
 
@@ -704,15 +716,27 @@
     <header class="top-header">
 
         <div class="brand">
+
             <div>
-                <div class="brand-logo">NAIA</div>
-                <div class="brand-name">DEVELOPMENTS</div>
+
+                <div class="brand-logo">
+                    NAIA
+                </div>
+
+                <div class="brand-name">
+                    DEVELOPMENTS
+                </div>
+
             </div>
+
         </div>
+
 
         <nav class="top-menu">
 
-            <a href="#">الصفحة الرئيسية</a>
+            <a href="#">
+                الصفحة الرئيسية
+            </a>
 
             <a href="#" class="active">
                 طلبات المراجعة
@@ -724,13 +748,23 @@
 
         </nav>
 
+
         <div class="user-info">
 
             <div>
-                <strong>إسلام السيد</strong>
+
+                <strong>
+                    إسلام السيد
+                </strong>
+
                 <br>
-                <small>قسم تقنية المعلومات</small>
+
+                <small>
+                    قسم تقنية المعلومات
+                </small>
+
             </div>
+
 
             <div class="user-avatar">
                 إ
@@ -754,6 +788,7 @@
 
         <aside class="sidebar">
 
+
             <button
                 class="new-request"
                 onclick="newRequest()">
@@ -766,28 +801,67 @@
             <div class="side-menu">
 
                 <div class="side-item">
-                    <span class="counter">12</span>
-                    <span>جميع الطلبات</span>
+
+                    <span class="counter">
+                        12
+                    </span>
+
+                    <span>
+                        جميع الطلبات
+                    </span>
+
                 </div>
 
-                <div class="side-item">
-                    <span class="counter">6</span>
-                    <span>قيد المراجعة</span>
-                </div>
 
                 <div class="side-item">
-                    <span class="counter">5</span>
-                    <span>مكتملة</span>
+
+                    <span class="counter">
+                        6
+                    </span>
+
+                    <span>
+                        قيد المراجعة
+                    </span>
+
                 </div>
 
-                <div class="side-item">
-                    <span class="counter">1</span>
-                    <span>مرفوضة</span>
-                </div>
 
                 <div class="side-item">
-                    <span class="counter warning">2</span>
-                    <span>متأخرة عن الموعد</span>
+
+                    <span class="counter">
+                        5
+                    </span>
+
+                    <span>
+                        مكتملة
+                    </span>
+
+                </div>
+
+
+                <div class="side-item">
+
+                    <span class="counter">
+                        1
+                    </span>
+
+                    <span>
+                        مرفوضة
+                    </span>
+
+                </div>
+
+
+                <div class="side-item">
+
+                    <span class="counter warning">
+                        2
+                    </span>
+
+                    <span>
+                        متأخرة عن الموعد
+                    </span>
+
                 </div>
 
             </div>
@@ -800,6 +874,7 @@
                 <div class="card-title">
                     سير المراجعة
                 </div>
+
 
                 <div class="workflow">
 
@@ -950,24 +1025,56 @@
                     معلومات الطلب
                 </div>
 
-                <div class="request-row">
-                    <span>رقم الطلب</span>
-                    <strong id="requestNumber">مسودة</strong>
-                </div>
 
                 <div class="request-row">
-                    <span>حالة الطلب</span>
-                    <span class="status">مسودة</span>
+
+                    <span>
+                        رقم الطلب
+                    </span>
+
+                    <strong id="requestNumber">
+                        مسودة
+                    </strong>
+
                 </div>
 
-                <div class="request-row">
-                    <span>تاريخ الإنشاء</span>
-                    <span id="createdDate">—</span>
-                </div>
 
                 <div class="request-row">
-                    <span>آخر تحديث</span>
-                    <span>—</span>
+
+                    <span>
+                        حالة الطلب
+                    </span>
+
+                    <span class="status">
+                        مسودة
+                    </span>
+
+                </div>
+
+
+                <div class="request-row">
+
+                    <span>
+                        تاريخ الإنشاء
+                    </span>
+
+                    <span id="createdDate">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="request-row">
+
+                    <span>
+                        آخر تحديث
+                    </span>
+
+                    <span id="updatedDate">
+                        —
+                    </span>
+
                 </div>
 
             </div>
@@ -980,6 +1087,7 @@
         ========================== -->
 
         <main class="main">
+
 
             <div class="breadcrumb">
                 طلبات المراجعة / طلب جديد
@@ -1031,8 +1139,13 @@
                         <div class="field">
 
                             <label>
+
                                 تاريخ التعاقد
-                                <span class="required">*</span>
+
+                                <span class="required">
+                                    *
+                                </span>
+
                             </label>
 
                             <input
@@ -1046,8 +1159,13 @@
                         <div class="field">
 
                             <label>
+
                                 اسم العميل
-                                <span class="required">*</span>
+
+                                <span class="required">
+                                    *
+                                </span>
+
                             </label>
 
                             <input
@@ -1062,8 +1180,13 @@
                         <div class="field">
 
                             <label>
+
                                 مساحة الوحدة
-                                <span class="required">*</span>
+
+                                <span class="required">
+                                    *
+                                </span>
+
                             </label>
 
                             <div class="input-unit">
@@ -1088,11 +1211,18 @@
                         <div class="field">
 
                             <label>
+
                                 المشروع
-                                <span class="required">*</span>
+
+                                <span class="required">
+                                    *
+                                </span>
+
                             </label>
 
-                            <select id="project" required>
+                            <select
+                                id="project"
+                                required>
 
                                 <option value="">
                                     اختر المشروع
@@ -1387,7 +1517,9 @@
 
                     <div class="notice">
 
-                        <strong>ملاحظة:</strong>
+                        <strong>
+                            ملاحظة:
+                        </strong>
 
                         يتم إضافة الموطن المختار للعميل أثناء استلام نسخة العقد
                         للعاملين بالخارج أو غير المصريين.
@@ -1674,7 +1806,7 @@
 
                     الحالة الحالية:
 
-                    <strong>
+                    <strong id="successStatus">
                         قيد مراجعة إدارة الوثائق والمستندات
                     </strong>
 
@@ -1693,6 +1825,16 @@
     ========================== -->
 
     <script>
+
+        /*
+         * =========================
+         * GOOGLE APPS SCRIPT API
+         * =========================
+         */
+
+        const API_URL =
+            "https://script.google.com/macros/s/AKfycbxhkuy3S_TUajVqKQUMEa9mwfVEHsr_OZaujFWkD0W9zZ2OGyYpcbdlSfOAPjlUZiCP/exec";
+
 
         /*
          * =========================
@@ -1768,7 +1910,8 @@
 
             } else {
 
-                contractPercentage.value = "0.00";
+                contractPercentage.value =
+                    "0.00";
 
             }
 
@@ -1790,7 +1933,8 @@
 
             } else {
 
-                deliveryPercentage.value = "0.00";
+                deliveryPercentage.value =
+                    "0.00";
 
             }
 
@@ -1822,52 +1966,63 @@
          * =========================
          * FILE UPLOAD DISPLAY
          * =========================
+         *
+         * NOTE:
+         * Files are only displayed locally for now.
+         * Google Drive upload will be added later.
          */
 
         document
             .getElementById("attachments")
-            .addEventListener("change", function () {
+            .addEventListener(
+                "change",
+                function () {
 
-                const fileList =
-                    document.getElementById("fileList");
+                    const fileList =
+                        document.getElementById("fileList");
 
-                fileList.innerHTML = "";
+                    fileList.innerHTML = "";
 
 
-                Array.from(this.files)
-                    .forEach(function (file) {
+                    Array.from(this.files)
+                        .forEach(function (file) {
 
-                        const item =
-                            document.createElement("div");
+                            const item =
+                                document.createElement("div");
 
-                        item.className =
-                            "file-item";
+                            item.className =
+                                "file-item";
 
-                        item.textContent =
-                            "📎 " +
-                            file.name +
-                            " (" +
-                            formatFileSize(file.size) +
-                            ")";
+                            item.textContent =
+                                "📎 " +
+                                file.name +
+                                " (" +
+                                formatFileSize(file.size) +
+                                ")";
 
-                        fileList.appendChild(item);
+                            fileList.appendChild(item);
 
-                    });
+                        });
 
-            });
+                }
+            );
 
 
         function formatFileSize(bytes) {
 
             if (bytes < 1024) {
+
                 return bytes + " B";
+
             }
 
             if (bytes < 1024 * 1024) {
+
                 return (
                     (bytes / 1024).toFixed(1)
                     + " KB"
                 );
+
             }
 
             return (
@@ -1880,85 +2035,338 @@
 
         /*
          * =========================
-         * SUBMIT
+         * SUBMIT TO GOOGLE APPS SCRIPT
          * =========================
          */
 
         document
             .getElementById("contractForm")
-            .addEventListener("submit", function (event) {
+            .addEventListener(
+                "submit",
+                async function (event) {
 
-                event.preventDefault();
-
-
-                /*
-                 * Generate temporary request number
-                 *
-                 * Later this will come from
-                 * SharePoint automatically.
-                 */
-
-                const year =
-                    new Date().getFullYear();
-
-                const random =
-                    Math.floor(
-                        10000 +
-                        Math.random() * 90000
-                    );
-
-                const requestNumber =
-                    "CR-" +
-                    year +
-                    "-" +
-                    random;
+                    event.preventDefault();
 
 
-                /*
-                 * Update sidebar
-                 */
+                    const form =
+                        this;
 
-                document
-                    .getElementById("requestNumber")
-                    .textContent =
-                    requestNumber;
-
-
-                document
-                    .getElementById("createdDate")
-                    .textContent =
-                    new Date()
-                    .toLocaleDateString("ar-EG");
+                    const submitButton =
+                        form.querySelector(
+                            'button[type="submit"]'
+                        );
 
 
-                /*
-                 * Show success message
-                 */
-
-                document
-                    .getElementById("successRequestNumber")
-                    .textContent =
-                    requestNumber;
+                    const originalButtonText =
+                        submitButton.textContent;
 
 
-                document
-                    .getElementById("successMessage")
-                    .style.display =
-                    "block";
+                    submitButton.disabled =
+                        true;
+
+                    submitButton.textContent =
+                        "جاري إرسال الطلب...";
 
 
-                /*
-                 * Scroll to result
-                 */
+                    try {
 
-                document
-                    .getElementById("successMessage")
-                    .scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
+                        /*
+                         * =========================
+                         * COLLECT FORM DATA
+                         * =========================
+                         */
 
-            });
+                        const data = {
+
+                            action:
+                                "createRequest",
+
+                            ContractDate:
+                                document
+                                    .getElementById(
+                                        "contractDate"
+                                    )
+                                    .value,
+
+                            ClientName:
+                                document
+                                    .getElementById(
+                                        "customerName"
+                                    )
+                                    .value,
+
+                            UnitNumber:
+                                document
+                                    .getElementById(
+                                        "unitNumber"
+                                    )
+                                    .value,
+
+                            Project:
+                                document
+                                    .getElementById(
+                                        "project"
+                                    )
+                                    .value,
+
+                            UnitArea:
+                                document
+                                    .getElementById(
+                                        "area"
+                                    )
+                                    .value,
+
+                            MeterPrice:
+                                document
+                                    .getElementById(
+                                        "meterPrice"
+                                    )
+                                    .value,
+
+                            UnitTotal:
+                                unitTotal.value,
+
+                            ContractPayment:
+                                document
+                                    .getElementById(
+                                        "contractPayment"
+                                    )
+                                    .value,
+
+                            ContractPaymentPercent:
+                                contractPercentage.value,
+
+                            PaidContract:
+                                paidContract.value,
+
+                            PaidDelivery:
+                                paidDelivery.value,
+
+                            DeliveryPayment:
+                                paidDelivery.value,
+
+                            DeliveryPaymentPercent:
+                                deliveryPercentage.value,
+
+                            Cheques:
+                                document
+                                    .querySelector(
+                                        'input[name="discountMemo"]:checked'
+                                    )
+                                    ?.value || "",
+
+                            FinancialNotes:
+                                document
+                                    .getElementById(
+                                        "financialNotes"
+                                    )
+                                    .value,
+
+                            LegalNotes:
+                                document
+                                    .getElementById(
+                                        "legalNotes"
+                                    )
+                                    .value,
+
+                            SubmittedBy:
+                                "إسلام السيد"
+
+                        };
+
+
+                        /*
+                         * =========================
+                         * SEND REQUEST
+                         * =========================
+                         */
+
+                        const response =
+                            await fetch(
+                                API_URL,
+                                {
+
+                                    method:
+                                        "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "text/plain;charset=utf-8"
+                                    },
+
+                                    body:
+                                        JSON.stringify(
+                                            data
+                                        )
+
+                                }
+                            );
+
+
+                        /*
+                         * =========================
+                         * READ RESPONSE
+                         * =========================
+                         */
+
+                        const result =
+                            await response.json();
+
+
+                        /*
+                         * =========================
+                         * CHECK RESULT
+                         * =========================
+                         */
+
+                        if (!result.success) {
+
+                            throw new Error(
+                                result.error ||
+                                "حدث خطأ أثناء إرسال الطلب"
+                            );
+
+                        }
+
+
+                        /*
+                         * =========================
+                         * UPDATE REQUEST NUMBER
+                         * =========================
+                         */
+
+                        document
+                            .getElementById(
+                                "requestNumber"
+                            )
+                            .textContent =
+                            result.requestId;
+
+
+                        /*
+                         * =========================
+                         * CREATED DATE
+                         * =========================
+                         */
+
+                        document
+                            .getElementById(
+                                "createdDate"
+                            )
+                            .textContent =
+                            new Date()
+                                .toLocaleDateString(
+                                    "ar-EG"
+                                );
+
+
+                        /*
+                         * =========================
+                         * UPDATE STATUS
+                         * =========================
+                         */
+
+                        const statusElement =
+                            document.querySelector(
+                                ".request-info .status"
+                            );
+
+
+                        if (statusElement) {
+
+                            statusElement.textContent =
+                                result.status;
+
+                        }
+
+
+                        /*
+                         * =========================
+                         * UPDATE SUCCESS MESSAGE
+                         * =========================
+                         */
+
+                        document
+                            .getElementById(
+                                "successRequestNumber"
+                            )
+                            .textContent =
+                            result.requestId;
+
+
+                        document
+                            .getElementById(
+                                "successStatus"
+                            )
+                            .textContent =
+                            result.status;
+
+
+                        document
+                            .getElementById(
+                                "successMessage"
+                            )
+                            .style.display =
+                            "block";
+
+
+                        /*
+                         * =========================
+                         * UPDATE LAST ACTION
+                         * ========================= */
+
+                        document
+                            .getElementById(
+                                "updatedDate"
+                            )
+                            .textContent =
+                            new Date()
+                                .toLocaleDateString(
+                                    "ar-EG"
+                                );
+
+
+                        /*
+                         * =========================
+                         * SCROLL TO RESULT
+                         * ========================= */
+
+                        document
+                            .getElementById(
+                                "successMessage"
+                            )
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "center"
+                            });
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Submit Error:",
+                            error
+                        );
+
+
+                        alert(
+                            "حدث خطأ أثناء إرسال الطلب:\n\n" +
+                            error.message
+                        );
+
+
+                    } finally {
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.textContent =
+                            originalButtonText;
+
+                    }
+
+                }
+            );
 
 
         /*
@@ -1974,40 +2382,81 @@
                     "هل تريد مسح جميع بيانات الطلب؟"
                 )
             ) {
+
                 return;
+
             }
 
 
             document
-                .getElementById("contractForm")
+                .getElementById(
+                    "contractForm"
+                )
                 .reset();
 
 
-            unitTotal.value = "0.00";
+            unitTotal.value =
+                "0.00";
 
-            contractPercentage.value = "0.00";
+            contractPercentage.value =
+                "0.00";
 
-            deliveryPercentage.value = "0.00";
-
-
-            document
-                .getElementById("fileList")
-                .innerHTML = "";
+            deliveryPercentage.value =
+                "0.00";
 
 
             document
-                .getElementById("successMessage")
-                .style.display = "none";
+                .getElementById(
+                    "fileList"
+                )
+                .innerHTML =
+                "";
 
 
             document
-                .getElementById("requestNumber")
-                .textContent = "مسودة";
+                .getElementById(
+                    "successMessage"
+                )
+                .style.display =
+                "none";
 
 
             document
-                .getElementById("createdDate")
-                .textContent = "—";
+                .getElementById(
+                    "requestNumber"
+                )
+                .textContent =
+                "مسودة";
+
+
+            document
+                .getElementById(
+                    "createdDate"
+                )
+                .textContent =
+                "—";
+
+
+            document
+                .getElementById(
+                    "updatedDate"
+                )
+                .textContent =
+                "—";
+
+
+            const statusElement =
+                document.querySelector(
+                    ".request-info .status"
+                );
+
+
+            if (statusElement) {
+
+                statusElement.textContent =
+                    "مسودة";
+
+            }
 
         }
 
@@ -2021,6 +2470,7 @@
         function newRequest() {
 
             resetForm();
+
 
             window.scrollTo({
                 top: 0,
@@ -2037,11 +2487,14 @@
          */
 
         document
-            .getElementById("contractDate")
+            .getElementById(
+                "contractDate"
+            )
             .value =
             new Date()
-            .toISOString()
-            .split("T")[0];
+                .toISOString()
+                .split("T")[0];
+
 
     </script>
 
